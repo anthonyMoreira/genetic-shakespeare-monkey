@@ -18,6 +18,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 # Algorithm
 
-This is a basic example of a genetic algorithm to find a target key word through evolution. The most resembling sentences are picked every generation to generate new sentences to ultimately find what we are looking for.
+This is a basic example of a genetic algorithm to find a target sentence through evolution, starting from completely random data. The most resembling sentences are picked every generation to generate new sentences to ultimately find what we are looking for.
 
 You can find the basic draw loop in the App.js component.
