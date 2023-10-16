@@ -10,7 +10,7 @@ class DNA {
     }
 
     newChar() {
-        const characters = 'abcdefghijklmnopqrstuvwxyz .,';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz .,';
         const randomIndex = Math.floor(Math.random() * characters.length);
         return characters[randomIndex];
     }
@@ -32,7 +32,8 @@ class DNA {
         //Without it, the function is linear which can cause performance issues when searching long sentences.
         //Indeed having one more character matching is very significant. It's a breakthrough.
         //Note : fitness is between 0 and 1 so fitness^x is also always between 0 and 1.
-        this.fitness = Math.pow(this.fitness, 7); 
+        //Note : I found empirically that the longer the target is the higher the exponential must be.
+        this.fitness = Math.pow(this.fitness, Math.floor(targetPhrase.length / 2)); 
         this.cumulativeFitness = cumulativeFitness + this.fitness; //Necessary for picking. See population#pickRandomIndividualGivenFitness()
     }
 
