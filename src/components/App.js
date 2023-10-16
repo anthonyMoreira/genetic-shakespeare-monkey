@@ -10,15 +10,14 @@ const App = () => {
         //Infinite render loop until we find the winning generation
         let pop = population;
         if (!pop) {
-            pop = new Population(500, 0.01, "to be or not to be that is the question");
+            pop = new Population(500, 0.01, "to be or not to be that is the question. yes my life is miserable");
             pop.setupPopulation();
             pop.calcFitness();
         }
         if (pop.foundSolution() === false) {
             pop = pop.copy();
-            pop.naturalSelection();
             pop.newGeneration();
-            pop.calcFitness(); //We compute the new gen fitness last so it's displayed
+            pop.calcFitness();
             setPopulation(pop);
         }
     }, [population]);

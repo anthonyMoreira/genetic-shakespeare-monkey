@@ -3,30 +3,37 @@ class DNA {
     constructor(length) {
         this.genes = [];
         this.fitness = 0;
+        this.cumulativeFitness = 0;
         for (let i = 0; i < length; i++) {
             this.genes[i] = this.newChar();
         }
     }
 
     newChar() {
-        const characters = 'abcdefghijklmnopqrstuvwxyz ';
+        const characters = 'abcdefghijklmnopqrstuvwxyz .,';
         const randomIndex = Math.floor(Math.random() * characters.length);
         return characters[randomIndex];
     }
 
     //Calculates the fitness given a target phrase. Output is between 0 and 1.
-    calcFitness(targetPhrase) {
+    calcFitness(targetPhrase, cumulativeFitness) {
         if (targetPhrase.length !== this.genes.length) {
             throw new Error("Target phrase array does not have the same length as the genes");
         }
+        //Rather basic scoring method, the more characters are equals the fitter the individual is
         let matchedChar = 0;
         for (let i = 0; i< this.genes.length; i++) {
             if (targetPhrase.charAt(i) === this.genes[i]) {
                 matchedChar++;
             }   
         }
-        this.fitness = matchedChar / targetPhrase.length;
-        this.fitness = Math.pow(this.fitness, 4);
+        this.fitness = matchedChar / targetPhrase.length; //normalize to have an output between 0 and 1
+        //This exponential function helps individual being close to the solution to be way more likely to be picked.
+        //Without it, the function is linear which can cause performance issues when searching long sentences.
+        //Indeed having one more character matching is very significant. It's a breakthrough.
+        //Note : fitness is between 0 and 1 so fitness^x is also always between 0 and 1.
+        this.fitness = Math.pow(this.fitness, 7); 
+        this.cumulativeFitness = cumulativeFitness + this.fitness; //Necessary for picking. See population#pickRandomIndividualGivenFitness()
     }
 
     breed(otherDNA, mutationRate) {
@@ -44,6 +51,7 @@ class DNA {
         const child = new DNA();
         child.genes = newGenes;
         child.fitness = 0;
+        child.cumulativeFitness = 0;
         //Add a little random mutation
         child.genes.forEach((gene, index) => {
             if (Math.random() <= mutationRate) {
@@ -64,6 +72,10 @@ class DNA {
 
     getGenes() {
         return this.genes;
+    }
+
+    getCumulativeFitness() {
+        return this.cumulativeFitness;
     }
 }
 export default DNA;
