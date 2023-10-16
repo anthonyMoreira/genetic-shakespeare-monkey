@@ -10,7 +10,7 @@ const App = () => {
         //Infinite render loop until we find the winning generation
         let pop = population;
         if (!pop) {
-            pop = new Population(1000, 0.01, "To be or not to be that is the question. Yes my life is miserable. However this code is beautiful and perfect. It is indeed very well optimized.");
+            pop = new Population(200, 0.01, "To be or not to be that is the question. Yes my life is miserable. However this code is beautiful and perfect. It is indeed very well optimized.");
             pop.setupPopulation();
             pop.calcFitness();
         }

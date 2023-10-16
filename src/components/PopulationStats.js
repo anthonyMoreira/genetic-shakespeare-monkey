@@ -4,7 +4,7 @@ const PopulationStats = ({population}) => {
     const generation = population.getGeneration();
     const currentBest = population.getCurrentBest();
     return (
-        <div className="flex-auto">
+        <div className="flex-initial w-1/3">
             <h1 className="text-4xl mt-1" >Current best : {currentBest.toString()}</h1>
             <h1 className="text-2xl mt-4">Target : {population.getTarget()}</h1>
             <h2 className="text-2xl">Fitness average : {fitnessAverage}</h2>
